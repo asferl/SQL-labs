@@ -1,2 +1,1 @@
 # SQL-labs
-# SQL-labs
