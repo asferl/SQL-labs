@@ -1,0 +1,39 @@
+
+SELECT region, SUM(population) as population_count
+FROM cities
+GROUP BY region
+
+
+SELECT region, SUM(population) as population_count, COUNT(*) as cities_count
+FROM cities
+GROUP BY region
+HAVING cities_count >= 10
+
+
+SELECT name, population
+FROM cities
+WHERE region IN (
+  SELECT region
+  FROM cities
+  GROUP BY region
+  HAVING COUNT(DISTINCT region) >= 5
+)
+ORDER BY population DESC
+LIMIT 10, 5
+
+
+SELECT region, SUM(population) as population_count
+FROM cities
+WHERE population > 300000
+GROUP BY region
+
+
+SELECT name, population
+FROM cities
+WHERE region IN (
+  SELECT region
+  FROM cities
+  GROUP BY region
+  HAVING COUNT(DISTINCT region) <= 5
+)
+AND population NOT BETWEEN 150000 AND 500000
