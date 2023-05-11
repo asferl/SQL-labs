@@ -1,0 +1,52 @@
+SET NAMES utf8;
+SET time_zone = '+00:00';
+SET foreign_key_checks = 0;
+SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
+
+DROP TABLE IF EXISTS `news`;
+CREATE TABLE `news` (
+  `id` int(50) unsigned NOT NULL AUTO_INCREMENT,
+  `category` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `content` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `news` (`id`, `category`, `name`, `content`) VALUES
+(1,	'politics',	'The era of Kissinger. To the storіchchya great vchenogo i politik',	'Zelensky: Ukraine needs more time to advance. Success will be, but we will lose people.'),
+(2,	'sport',	'Sevilla lost a win over Juventus in the first pivfinal of the European League',	'Al-Nasr prepares the proposition of Allegri'),
+(3,	'nature',	'Sounds of nature help with gambling addiction - study',	'The pilot unrolled the flyer to show the passengers the air.');
+
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `user` (`id`, `name`, `email`) VALUES
+(1,	'Mike',	'bossmike@gmail.com'),
+(2,	'Olga',	'Olga123@gmail.com'),
+(3,	'Stas',	'stasik@gmail.com');
+
+DROP TABLE IF EXISTS `valuation`;
+CREATE TABLE `valuation` (
+  `id` int(50) unsigned NOT NULL AUTO_INCREMENT,
+  `comment` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `mark` int(1) unsigned DEFAULT NULL,
+  `user_id` int(50) unsigned DEFAULT NULL,
+  `news_id` int(50) unsigned NOT NULL,
+  `ip` int(4) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `news_id` (`news_id`),
+  CONSTRAINT `valuation_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `news` (`id`),
+  CONSTRAINT `valuation_ibfk_2` FOREIGN KEY (`news_id`) REFERENCES `news` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `valuation` (`id`, `comment`, `mark`, `user_id`, `news_id`, `ip`) VALUES
+(1,	'not bad ',	5,	1,	1,	1235),
+(2,	'Good ',	4,	2,	2,	6439),
+(3,	'Impossible! ',	5,	3,	3,	7412);
+
